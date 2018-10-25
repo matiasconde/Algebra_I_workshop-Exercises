@@ -137,10 +137,18 @@ minimo xs | length xs == 0 = 0
 		  | (head xs) < (minimo (tail xs)) = head xs
 		  | otherwise = minimo (tail xs)
 
-
+-- pattern matching con guardas la lista vacía la matchea con ordenar [] y luego usamos guardas
 ordenar:: [Integer] -> [Integer]
 ordenar xs | length xs == 0 = []
 	   	   | (head xs) == minimo xs = (head xs):(ordenar (tail xs))
            | otherwise = (minimo (tail xs)):listaOrdenadaSinMinimo
 			where listaOrdenadaSinMinimo = (ordenar ((head xs):(quitarPrimeraAparicion (minimo (tail xs)) (tail xs))))
 
+elimListConRep :: [[Integer]] -> [[Integer]]
+elimListConRep [] = []
+elimListConRep (x:xs) | hayRepetidos x = elimListConRep xs
+					  | otherwise = x:(elimListConRep xs)
+
+ordTodListas :: [[Integer]] -> [[Integer]]
+ordTodListas [] = []
+ordTodListas (x:xs) = (ordenar x):(ordTodListas xs)
