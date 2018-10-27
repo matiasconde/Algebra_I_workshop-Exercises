@@ -42,7 +42,7 @@ f2 n q | n == 1 = q
 
 f3 :: Integer->Float->Float
 f3 n q | n==0 = 1
-       | n>0 = q^(2*n) + q^(2*n-1) + (f3 (n-1) q)
+       | n>0 = q^(2*n) + (f3 (n-1) q)
 
 f4 :: Integer->Float->Float
 f4 n q = q^n+(q^n)*(f2 n q) 
@@ -71,10 +71,10 @@ doblefactorial n | n==0 = 1
 	             | n==1 = 1
 		         | otherwise = n*doblefactorial (n-2)
 
-recur_inf_neg :: Integer->Integer
+recur_inf_neg :: Integer->Integer --esta función termina si se ejecuta con positivos y no termina si se ejecuta con negativos
 recur_inf_neg n | n==0 = 1
-         		| n>0 = recur_inf_neg (n-1)
-
+         		| otherwise = recur_inf_neg (n-1)
+				
 pow2 n = 2^n
 	        
 
