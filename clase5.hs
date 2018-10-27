@@ -60,10 +60,14 @@ menorDivisor n = menorDivisorDesde n 2
 
 esPrimo :: Integer -> Bool
 esPrimo a | mod a 2 == 0 = False  -- Le agregué esto para descartar números pares grandes de una. 
-		  | a==0 = False
+		  | a==0 = False 
 		  | a<0 = esPrimo (-a)
 		  | sumaDivisores a == a+1 = True
      	  | otherwise = False
+
+esPrimo2 :: Integer -> Bool
+esPrimo2 n | n==1 = False
+		   | n>1 = (menorDivisor n) == n
 
 sumaSimple :: Integer -> Integer -> Integer
 sumaSimple i m | m==1 = i
@@ -81,3 +85,6 @@ sumaFracciones q n | n == 1 = q
 
 sumaRacionales :: Float->Float->Float
 sumaRacionales m n = sumaFracciones (m*(m+1)/2) n
+
+sumaRacionales2 :: Float->Float->Float
+sumaRacionales2 m n = (m*(m+1)/2)*(sumaFracciones 1 n) --Obvio da igual pues saco factor común. 
