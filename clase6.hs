@@ -60,12 +60,12 @@ esSumaDeDosPrimos n = esSumaDeDosPrimosHasta n 2
 
 goldBachHasta :: Integer->Integer->Bool
 goldBachHasta 0 0 = False
-goldBachHasta 100 k = fst (esSumaDeDosPrimos k)
+goldBachHasta 200 k = fst (esSumaDeDosPrimos k) --Este es el límite si queremos que calcule hasta más términos, aumentar a 1000
 goldBachHasta n k = (fst (esSumaDeDosPrimos n))&&(goldBachHasta (n+2) k) --Tarda mucho si la defino hasta 2*10^18
 
 sumaDigitosPositivos :: Integer -> Integer
 sumaDigitosPositivos 0 = 0
-sumaDigitosPositivos n = (mod n 10) + sumaDigitosPositivos (div n 10)
+sumaDigitosPositivos n = (mod n 10) + sumaDigitosPositivos (div n 10) --el último término más los siguientes.
 
 digitosIguales :: Integer -> Bool
 digitosIguales 0 = True
@@ -75,11 +75,16 @@ digitosIguales n | (0<n)&&(n<10) = True
 
 collatz :: Integer -> Integer
 collatz 1 = 1
-collatz n | (mod n 2) == 0 = collatz  (div n 2) + 1
-collatz n | (mod n 2) /= 0 = collatz (3*n + 1) + 1
+collatz n | (mod n 2) == 0 = collatz  (div n 2) 
+          | (mod n 2) /= 0 = collatz (3*n + 1)
+
+cantTermCollatz :: Integer -> Integer
+cantTermCollatz 1 = 1
+cantTermCollatz n | (mod n 2) == 0 = cantTermCollatz (div n 2) + 1
+			      | (mod n 2) /= 0 = cantTermCollatz (3*n + 1) + 1
 
 maxTerminosCollatzHasta :: Integer -> (Integer,Integer) -- La primer componente me da la cantidad de términos de la sucesión, la segunda el número que la produce
 maxTerminosCollatzHasta 1 = (1,1)
-maxTerminosCollatzHasta n | collatz n > (fst maxTerminosCollatzAnteriores) = (collatz n,n)
+maxTerminosCollatzHasta n | cantTermCollatz n > (fst maxTerminosCollatzAnteriores) = (cantTermCollatz n,n)
 						  | otherwise = maxTerminosCollatzAnteriores
 						  where maxTerminosCollatzAnteriores = maxTerminosCollatzHasta (n-1)
